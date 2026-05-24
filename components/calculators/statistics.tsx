@@ -55,7 +55,8 @@ export function StatisticsCalc() {
      const median = Number(mathjs.median(parsedData));
      // Handle mode being an array or single value
      const modeRaw = mathjs.mode(parsedData);
-     const mode = Array.isArray(modeRaw) ? modeRaw.join(', ') : modeRaw;
+     const modeArr = (modeRaw as any).toArray ? (modeRaw as any).toArray() : modeRaw;
+     const mode = Array.isArray(modeArr) ? modeArr.join(', ') : modeArr;
      
      const variancePop = jStat.variance(parsedData, true);
      const varianceSamp = jStat.variance(parsedData, false);

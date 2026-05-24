@@ -86,7 +86,9 @@ export function MatrixCalc() {
       let eigsA = null;
       if (rows === cols) {
         try {
-          eigsA = mathjs.eigs(A);
+          const evalue = mathjs.eigs(A).values;
+          // Ensure it's an array for React mapping
+          eigsA = (evalue as any).toArray ? (evalue as any).toArray() : evalue;
         } catch (e) {
           console.error("Eigenvalue calc failed", e);
         }
@@ -273,7 +275,7 @@ export function MatrixCalc() {
                 <div className="flex flex-col gap-2">
                   <span className="text-xs font-mono text-white/30 uppercase tracking-widest">Eigenvalues</span>
                   <div className="bg-black/30 rounded-xl p-3 border border-white/5 font-mono text-sm text-emerald-400">
-                    {(results.eigsA as any).values.map((v: any, i: number) => (
+                    {(results.eigsA as any[]).map((v: any, i: number) => (
                       <div key={i}>λ_{i+1} = {typeof v === 'number' ? v.toFixed(4) : v.toString()}</div>
                     ))}
                   </div>
@@ -357,7 +359,7 @@ function MatrixDisplay({ data }: { data: number[][] }) {
         {data.map((row, r) => 
           row.map((val, c) => (
             <div key={`${r}-${c}`} className="text-center font-mono text-xs text-white/80 py-1 border-b border-white/5">
-              {typeof val === 'number' ? parseFloat(val.toPrecision(5)) : val}
+              {typeof val === 'number' ? parseFloat(val.toPrecision(5)) : String(val)}
             </div>
           ))
         )}

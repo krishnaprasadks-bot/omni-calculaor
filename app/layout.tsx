@@ -8,8 +8,8 @@ const syne = Syne({ subsets: ['latin'], variable: '--font-syne' });
 const dmMono = DM_Mono({ weight: ['300', '400', '500'], subsets: ['latin'], variable: '--font-dm-mono' });
 
 export const metadata: Metadata = {
-  title: 'OmniCalc - Ultimate Calculator Workspace',
-  description: 'Premium futuristic calculator web application with scientific, graphing, financial, AI, and unit conversion capabilities.',
+  title: 'SolveX Calc - The Ultimate Advanced Calculator',
+  description: 'Calculate Everything. The Ultimate Advanced Calculator featuring Scientific, Financial, Graphing, Matrix, Statistics, Programmer, Calculus, Equation Solver, and a Gemini-powered AI assistant.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

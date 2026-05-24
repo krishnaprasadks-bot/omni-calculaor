@@ -9,6 +9,9 @@ import { ConverterCalc } from '@/components/calculators/converter';
 import { AISolver } from '@/components/calculators/ai-solver';
 import { StatisticsCalc } from '@/components/calculators/statistics';
 import { MatrixCalc } from '@/components/calculators/matrix';
+import { ProgrammerCalc } from '@/components/calculators/programmer';
+import { CalculusCalc } from '@/components/calculators/calculus';
+import { SolverCalc } from '@/components/calculators/solver';
 import { motion, AnimatePresence } from 'motion/react';
 
 function CalculatorWorkspace() {
@@ -37,6 +40,9 @@ function CalculatorWorkspace() {
                     {mode === 'financial' && <FinancialCalc />}
                     {mode === 'converter' && <ConverterCalc />}
                     {mode === 'matrix' && <MatrixCalc />}
+                    {mode === 'programmer' && <ProgrammerCalc />}
+                    {mode === 'calculus' && <CalculusCalc />}
+                    {mode === 'solver' && <SolverCalc />}
                     {mode === 'statistics' && <StatisticsCalc />}
                     {mode === 'ai' && <AISolver />}
                  </motion.div>

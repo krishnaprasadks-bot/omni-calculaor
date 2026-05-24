@@ -10,6 +10,9 @@ const MODES = [
   { id: 'financial', icon: BadgeDollarSign, label: 'Financial', color: 'text-brand-emerald' },
   { id: 'converter', icon: RefreshCcw, label: 'Converter', color: 'text-orange-400' },
   { id: 'matrix', icon: Calculator, label: 'Matrix', color: 'text-emerald-400' },
+  { id: 'programmer', icon: FunctionSquare, label: 'Programmer', color: 'text-red-400' },
+  { id: 'calculus', icon: LineChart, label: 'Calculus', color: 'text-blue-400' },
+  { id: 'solver', icon: FunctionSquare, label: 'Solver', color: 'text-lime-400' },
   { id: 'statistics', icon: PieChart, label: 'Statistics', color: 'text-yellow-400' },
   { id: 'ai', icon: BrainCircuit, label: 'AI Solver', color: 'text-brand-violet' },
 ] as const;

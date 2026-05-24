@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext, useState, ReactNode } from 'react';
 
-export type CalcMode = 'basic' | 'scientific' | 'graphing' | 'financial' | 'converter' | 'ai' | 'statistics' | 'matrix';
+export type CalcMode = 'basic' | 'scientific' | 'graphing' | 'financial' | 'converter' | 'statistics' | 'matrix' | 'programmer' | 'calculus' | 'solver' | 'ai';
 
 export interface HistoryItem {
   id: string;

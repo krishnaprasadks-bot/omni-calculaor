@@ -1,6 +1,6 @@
 {
-  "name": "OmniCalc",
-  "description": "Premium futuristic calculator web application with scientific, graphing, financial, AI, and unit conversion capabilities.",
+  "name": "SolveX Calc",
+  "description": "Calculate Everything. The Ultimate Advanced Calculator featuring Scientific, Financial, Graphing, Matrix, Statistics, Programmer, Calculus, Equation Solver, and a Gemini-powered AI assistant.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
