@@ -40,10 +40,10 @@ function CalculatorWorkspace() {
                     {mode === 'financial' && <FinancialCalc />}
                     {mode === 'converter' && <ConverterCalc />}
                     {mode === 'matrix' && <MatrixCalc />}
+                    {mode === 'statistics' && <StatisticsCalc />}
                     {mode === 'programmer' && <ProgrammerCalc />}
                     {mode === 'calculus' && <CalculusCalc />}
                     {mode === 'solver' && <SolverCalc />}
-                    {mode === 'statistics' && <StatisticsCalc />}
                     {mode === 'ai' && <AISolver />}
                  </motion.div>
               </AnimatePresence>
