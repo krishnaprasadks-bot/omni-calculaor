@@ -1,5 +1,5 @@
 {
-  "name": "SolveX Calc",
+  "name": "solvex-calc",
   "description": "Calculate Everything. The Ultimate Advanced Calculator featuring 11 powerful modules including Scientific, Graphing, Financial, Programmer, Calculus, and an AI-powered assistant.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

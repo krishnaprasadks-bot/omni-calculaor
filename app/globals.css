@@ -1,59 +1,40 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-
-@layer base {
-  :root {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 100%;
-    
-    --primary: 191 100% 50%;
-    --secondary: 258 90% 66%;
-    --accent: 160 84% 39%;
-  }
-}
-
-@theme {
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-syne);
-  --font-mono: var(--font-dm-mono);
-
-  --color-brand-cyan: #00d4ff;
-  --color-brand-violet: #8b5cf6;
-  --color-brand-emerald: #10b981;
-  --color-brand-bg: #0a0a0f;
-  --color-glass: rgba(255, 255, 255, 0.05);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
-  --color-glass-hover: rgba(255, 255, 255, 0.1);
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer utilities {
   .glass-panel {
-    background: var(--color-glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--color-glass-border);
+    @apply bg-black/40 backdrop-blur-3xl border border-white/10 shadow-xl;
   }
-  
   .glass-button {
-    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: all 0.2s ease;
+    @apply bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 active:bg-white/5 transition-all text-white;
+  }
+  .text-glow-cyan {
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  }
+  .text-glow-white {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  .box-glow-cyan {
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
   }
   
-  .glass-button:hover {
-    background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-    border-color: rgba(255,255,255,0.2);
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
-
-  .text-glow-cyan { text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3); }
-  .box-glow-cyan { box-shadow: 0 0 15px rgba(0, 212, 255, 0.3); }
-  .box-glow-violet { box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); }
-  .box-glow-emerald { box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
-  .text-glow-violet { text-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3); }
-  .text-glow-emerald { text-shadow: 0 0 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3); }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 }
 
-* { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.2) transparent; }
+body {
+  background-color: #050505;
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(0, 212, 255, 0.08), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(138, 43, 226, 0.08), transparent 25%);
+  background-attachment: fixed;
+  color: white;
+}

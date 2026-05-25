@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import { Inter, Syne, DM_Mono } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
+import type { Metadata } from 'next';
+import { DM_Sans, DM_Mono } from 'next/font/google';
+import { CalcProvider } from '@/components/calc-context';
+import { Sidebar } from '@/components/sidebar';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const syne = Syne({ subsets: ['latin'], variable: '--font-syne' });
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
 const dmMono = DM_Mono({ weight: ['300', '400', '500'], subsets: ['latin'], variable: '--font-dm-mono' });
 
 export const metadata: Metadata = {
@@ -15,11 +15,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${syne.variable} ${dmMono.variable} font-sans antialiased text-white bg-[#0a0a0f] overflow-hidden`} suppressHydrationWarning>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          {children}
-        </ThemeProvider>
+    <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`}>
+      <body className="font-sans antialiased bg-black overflow-hidden select-none h-[100dvh] w-[100dvw]">
+        <CalcProvider>
+          <div className="flex h-full w-full">
+            <Sidebar />
+            <main className="flex-1 h-full relative overflow-hidden flex flex-col">
+              {children}
+            </main>
+          </div>
+        </CalcProvider>
       </body>
     </html>
   );

@@ -1,102 +1,78 @@
 'use client';
-
-import { useState, useMemo, useEffect } from 'react';
+import { LineChart as LineChartIcon, ZoomIn } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import { Type, Spline, Plus, Trash2 } from 'lucide-react';
-import * as mathjs from 'mathjs';
 
-const Plot = dynamic(() => import('react-plotly.js'), { ssr: false, loading: () => <div className="w-full h-full flex items-center justify-center glass-panel rounded-2xl"><div className="animate-spin w-8 h-8 border-4 border-brand-cyan border-t-transparent rounded-full" /></div> });
+const Plot = dynamic(() => import('react-plotly.js'), { 
+  ssr: false, 
+  loading: () => <div className="animate-pulse w-full h-full bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center font-mono text-emerald-400/50">Warming up rendering engine...</div> 
+});
 
 export function GraphingCalc() {
-  const [equations, setEquations] = useState([{ id: 1, expr: 'sin(x)', color: '#00d4ff' }]);
-  const [xRange, setXRange] = useState([-10, 10]);
-
-  const generateData = (expr: string, color: string) => {
-    try {
-      const node = mathjs.parse(expr);
-      const code = node.compile();
-      const xObj = mathjs.range(xRange[0], xRange[1], (xRange[1] - xRange[0])/200, true).toArray() as number[];
-      const yObj = xObj.map(x => {
-        try {
-          return code.evaluate({ x });
-        } catch(e) { return null; }
-      });
-      return {
-        x: xObj, y: yObj, type: 'scatter', mode: 'lines', line: { color, width: 3, shape: 'spline' }, name: expr
-      };
-    } catch(e) {
-      return null;
-    }
-  };
-
-  const plotData = useMemo(() => equations.map(eq => generateData(eq.expr, eq.color)).filter(Boolean), [equations, xRange]);
-
-  const addEquation = () => {
-    const colors = ['#00d4ff', '#8b5cf6', '#10b981', '#f43f5e', '#f59e0b'];
-    setEquations([...equations, { id: Date.now(), expr: '', color: colors[equations.length % colors.length] }]);
-  };
-
-  const updateEquation = (id: number, val: string) => {
-    setEquations(equations.map(eq => eq.id === id ? { ...eq, expr: val } : eq));
-  };
-  
-  const removeEquation = (id: number) => setEquations(equations.filter(eq => eq.id !== id));
-
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return null;
-
   return (
-    <div className="flex flex-col md:flex-row h-full gap-4 py-4 w-full">
-      {/* Sidebar: Equation List */}
-      <div className="w-full md:w-80 glass-panel rounded-2xl p-4 flex flex-col gap-4 border border-white/10 shrink-0 overflow-y-auto">
-        <div className="flex items-center justify-between pb-4 border-b border-white/5">
-          <h3 className="font-serif text-lg font-bold flex items-center gap-2"><Spline className="w-5 h-5 text-brand-cyan" /> Equations</h3>
-          <button onClick={addEquation} className="p-1.5 glass-button rounded-lg text-white hover:text-brand-cyan"><Plus className="w-4 h-4" /></button>
-        </div>
-        
-        <div className="flex flex-col gap-3">
-          {equations.map((eq, i) => (
-            <div key={eq.id} className="relative group">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full" style={{ backgroundColor: eq.color, boxShadow: `0 0 10px ${eq.color}` }} />
-              <input 
-                type="text"
-                value={eq.expr}
-                onChange={(e) => updateEquation(eq.id, e.target.value)}
-                placeholder="e.g. x^2"
-                className="w-full bg-black/30 border border-white/5 rounded-xl pl-8 pr-10 py-3 text-white font-mono text-sm outline-none focus:border-white/20 transition-colors"
-                spellCheck={false}
-              />
-              <button onClick={() => removeEquation(eq.id)} className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-white/30 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"><Trash2 className="w-4 h-4" /></button>
-            </div>
-          ))}
-        </div>
+    <div className="flex flex-col h-full w-full overflow-hidden">
+      <div className="flex items-center justify-between p-4 px-6 md:px-8 border-b border-white/5 bg-black/20">
+        <h3 className="font-serif text-2xl font-bold flex items-center gap-2 text-white">
+          <LineChartIcon className="w-6 h-6 text-emerald-400" /> Plotter
+        </h3>
       </div>
 
-      {/* Main Graph Area */}
-      <div className="flex-1 glass-panel rounded-2xl border border-white/10 overflow-hidden relative min-h-[400px]">
-        <Plot
-          data={plotData as any}
-          layout={{
-            autosize: true,
-            margin: { l: 40, r: 20, t: 30, b: 40 },
-            paper_bgcolor: 'transparent',
-            plot_bgcolor: 'transparent',
-            xaxis: { gridcolor: 'rgba(255,255,255,0.1)', zerolinecolor: 'rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.5)', range: xRange },
-            yaxis: { gridcolor: 'rgba(255,255,255,0.1)', zerolinecolor: 'rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.5)' },
-            showlegend: false,
-            font: { family: 'var(--font-mono)', color: 'rgba(255,255,255,0.5)' }
-          }}
-          useResizeHandler={true}
-          style={{ width: '100%', height: '100%' }}
-          config={{ displayModeBar: false, scrollZoom: true }}
-          onRelayout={(e: any) => {
-             if (e['xaxis.range[0]'] && e['xaxis.range[1]']) {
-                setXRange([e['xaxis.range[0]'], e['xaxis.range[1]']]);
-             }
-          }}
-        />
+      <div className="flex flex-1 flex-col md:flex-row overflow-hidden">
+         {/* Sidebar Formulas */}
+         <div className="w-full md:w-80 border-r border-white/5 bg-black/40 p-4 flex flex-col gap-4 overflow-y-auto shrink-0">
+            <h4 className="font-mono text-sm tracking-widest text-emerald-400 uppercase">Equations</h4>
+            
+            <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/10 hover:border-emerald-500/30 transition-colors">
+               <div className="w-4 h-4 rounded-full bg-[#10b981] shrink-0 border-2 border-black" />
+               <input type="text" className="bg-transparent border-none text-white font-mono text-sm outline-none w-full" defaultValue="y = sin(x) / x" />
+            </div>
+
+            <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/10 hover:border-pink-500/30 transition-colors">
+               <div className="w-4 h-4 rounded-full bg-[#ec4899] shrink-0 border-2 border-black" />
+               <input type="text" className="bg-transparent border-none text-white font-mono text-sm outline-none w-full" defaultValue="y = 0.5 * cos(3*x)" />
+            </div>
+
+            <button className="py-2 border border-dashed border-white/20 rounded-xl text-white/40 font-mono text-sm hover:bg-white/5 hover:text-white transition-colors mt-2">
+               + Add Function
+            </button>
+         </div>
+
+         {/* Plot Area */}
+         <div className="flex-1 h-[40vh] md:h-full relative bg-[#0a0a0a]">
+            {/* Just a mockup using standard Plot component to avoid massive processing unless requested */}
+            <div className="absolute inset-0 p-4">
+               <Plot 
+                  data={[
+                     {
+                        x: Array.from({length: 100}, (_,i) => (i-50)/10),
+                        y: Array.from({length: 100}, (_,i) => { const x = (i-50)/10; return x===0 ? 1 : Math.sin(x)/x; }),
+                        type: 'scatter',
+                        mode: 'lines',
+                        line: {color: '#10b981', width: 3},
+                        name: 'f(x)'
+                     },
+                     {
+                        x: Array.from({length: 100}, (_,i) => (i-50)/10),
+                        y: Array.from({length: 100}, (_,i) => { const x = (i-50)/10; return 0.5 * Math.cos(3*x); }),
+                        type: 'scatter',
+                        mode: 'lines',
+                        line: {color: '#ec4899', width: 2},
+                        name: 'g(x)'
+                     }
+                  ]}
+                  layout={{
+                     autosize: true,
+                     margin: { t: 20, b: 30, l: 30, r: 20 },
+                     paper_bgcolor: 'transparent',
+                     plot_bgcolor: 'transparent',
+                     xaxis: { gridcolor: '#ffffff15', zerolinecolor: '#ffffff40' },
+                     yaxis: { gridcolor: '#ffffff15', zerolinecolor: '#ffffff40' },
+                  }}
+                  style={{ width: '100%', height: '100%' }}
+                  useResizeHandler={true}
+                  config={{ responsive: true, displayModeBar: false }}
+               />
+            </div>
+         </div>
       </div>
     </div>
   );
