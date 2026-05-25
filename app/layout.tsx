@@ -1,30 +1,45 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { DM_Sans, DM_Mono } from 'next/font/google';
-import { CalcProvider } from '@/components/calc-context';
-import { Sidebar } from '@/components/sidebar';
+import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+import { Sidebar, MobileNav } from "@/components/Sidebar";
+import { HistoryPanel } from "@/components/layout/history-panel";
+import { PageTransition } from "@/components/layout/PageTransition";
 
-const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
-const dmMono = DM_Mono({ weight: ['300', '400', '500'], subsets: ['latin'], variable: '--font-dm-mono' });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
-  title: 'SolveX Calc - Calculate Everything',
-  description: 'SolveX Calc — The Ultimate Advanced Calculator. Featuring 11 powerful modules including Scientific, Graphing, Financial, Programmer, Calculus, and an AI-powered assistant.',
-  manifest: '/manifest.json',
+  title: "OmniCalc Workspace",
+  description: "Advanced multi-mode calculator workspace",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`}>
-      <body className="font-sans antialiased bg-black overflow-hidden select-none h-[100dvh] w-[100dvw]">
-        <CalcProvider>
-          <div className="flex h-full w-full">
-            <Sidebar />
-            <main className="flex-1 h-full relative overflow-hidden flex flex-col">
+    <html lang="en" className="dark">
+      <body
+        className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background flex h-screen overflow-hidden`}
+      >
+        <Sidebar />
+        <main className="flex-1 flex flex-col min-w-0 h-full">
+          <MobileNav />
+          <div className="flex-1 overflow-y-auto">
+            <PageTransition>
               {children}
-            </main>
+            </PageTransition>
           </div>
-        </CalcProvider>
+        </main>
+        <HistoryPanel />
       </body>
     </html>
   );

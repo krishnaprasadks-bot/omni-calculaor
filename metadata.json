@@ -1,6 +1,8 @@
 {
-  "name": "solvex-calc",
-  "description": "Calculate Everything. The Ultimate Advanced Calculator featuring 11 powerful modules including Scientific, Graphing, Financial, Programmer, Calculus, and an AI-powered assistant.",
+  "name": "OmniCalc Pro",
+  "description": "An advanced suite of calculators including Matrix Algebra, Number Systems conversion, and Calculus tools.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
