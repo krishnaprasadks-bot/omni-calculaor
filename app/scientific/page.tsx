@@ -1,6 +1,6 @@
 "use client";
 
-import { ScientificCalc } from "@/components/scientific/scientific-calc";
+import { ScientificCalc } from "@/components/calculators/ScientificCalc";
 
 export default function ScientificCalculator() {
   return (

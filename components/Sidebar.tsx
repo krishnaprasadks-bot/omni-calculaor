@@ -48,7 +48,7 @@ export function SidebarContent({ onItemClick }: { onItemClick?: () => void }) {
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
-            <Link key={item.name} href={item.href} onClick={onItemClick}>
+            <Link key={item.name} href={item.href} onClick={onItemClick} prefetch={true}>
               <div className={cn("relative flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all group overflow-hidden", isActive ? "text-white" : "text-gray-400 hover:text-gray-200")}>
                 {isActive && (
                   <motion.div layoutId="sidebar-active" className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded-xl border border-white/10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />

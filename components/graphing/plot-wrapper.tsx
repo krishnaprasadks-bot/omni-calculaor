@@ -10,29 +10,21 @@ export default function PlotWrapper(props: PlotParams) {
     let isMounted = true;
     
     const loadPlotly = async () => {
-      // Load script if not present
-      if (!(window as any).Plotly) {
-        await new Promise<void>((resolve, reject) => {
-          const script = document.createElement('script');
-          script.src = 'https://cdn.plot.ly/plotly-2.32.0.min.js';
-          script.async = true;
-          script.onload = () => resolve();
-          script.onerror = () => reject(new Error('Failed to load Plotly script'));
-          document.head.appendChild(script);
-        });
+      try {
+        const createPlotlyComponent = (await import('react-plotly.js/factory')).default;
+        const PlotlyModule = await import('plotly.js-basic-dist');
+        const Plotly = PlotlyModule.default || PlotlyModule;
+        
+        if (!isMounted) return;
+        
+        const Plot = createPlotlyComponent(Plotly);
+        setPlotComponent(() => Plot);
+      } catch (e) {
+        console.error("Failed to load Plotly:", e);
       }
-      
-      if (!isMounted) return;
-      
-      // Load factory dynamically (it doesn't have window references on import time)
-      const mod = await import('react-plotly.js/factory');
-      const createPlot = mod.default || mod;
-      
-      const Plot = createPlot((window as any).Plotly);
-      setPlotComponent(() => Plot);
     };
 
-    loadPlotly().catch(console.error);
+    loadPlotly();
     
     return () => { isMounted = false; };
   }, []);
