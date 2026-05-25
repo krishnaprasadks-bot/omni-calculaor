@@ -18,11 +18,13 @@ export function HypothesisTesting() {
   const [twoData2, setTwoData2] = useState("10, 11, 14, 15, 16");
   const [twoTail, setTwoTail] = useState<1 | 2>(2);
 
-  const parseArray = (str: string) =>
-    str
+  const parseArray = (str: string | undefined) => {
+    if (!str) return [];
+    return str
       .split(/[\s,]+/)
       .map((s) => parseFloat(s))
       .filter((n) => !isNaN(n));
+  };
 
   const renderOneSampleT = () => {
     const data = parseArray(oneData);

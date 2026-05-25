@@ -276,7 +276,7 @@ export function NumberSystemsCalc() {
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-syne font-bold text-sm flex items-center gap-2">
                       <Code2 className="w-4 h-4 text-gray-400" />
-                      TWO'S COMPLEMENT
+                      TWO&apos;S COMPLEMENT
                     </h3>
                     <select 
                       value={bitSize} 

@@ -1,7 +1,8 @@
 import * as math from "mathjs";
 const jstat = require("jstat");
 
-export function parseDataset(input: string): number[] {
+export function parseDataset(input: string | undefined): number[] {
+  if (!input) return [];
   return input
     .split(/[\s,]+/)
     .map((s) => parseFloat(s.trim()))
