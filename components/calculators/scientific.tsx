@@ -191,6 +191,7 @@ export function ScientificCalc() {
   function renderPadBtn(action: string, label: React.ReactNode, type: string = 'func') {
     return (
       <button 
+        key={action}
         onClick={() => handlePress(action)}
         className={clsx(
            "h-12 glass-button rounded-xl font-mono text-sm active:scale-95 transition-all text-white",
